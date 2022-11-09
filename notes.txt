@@ -1,0 +1,212 @@
+TEXT COLOR AND FONT
+Fonts and colors were not showing until I did the following...
+
+
+1) Run the following command in the terminal:
+npx tailwindcss init
+
+This creates a file tailwind.config.js in the root directory i.e. same directory as package.json
+
+2) Update the file content as follows:
+
+module.exports = {
+  content: [
+    './public/**/*.{html,js}',
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+
+3) Run the following command in the terminal:
+npm run build-css
+
+4) Run the following command in the terminal:
+npx tailwindcss -i ./src/styles.css -o ./public/styles.css --watch
+
+Further reference: https://tailwindcss.com/docs/installation
+
+
+
+
+
+If anyone finds they have to save the file twice to see changes, it'd be because the Live-Server picks up the HTML changes before tailwind has finished building the CSS file and doesn't register the change
+
+Instead of > live-server public
+Try > live-server public --no-css-inject
+
+to implement uppercase just write uppercase 
+text color weight eg text-red-700
+
+//LINKS
+https://tailwindcss.com/docs/customizing-colors
+https://tailwindcss.com/docs/font-size
+https://tailwindcss.com/docs/installation
+
+
+
+
+
+
+
+
+
+MARGIN PADDING AND BORDERS 
+make sure to run npx tailwindcss -i ./src/styles.css -o ./public/styles.css --watch
+
+//LINKS
+ 
+https://tailwindcss.com/docs/padding
+https://tailwindcss.com/docs/border-width
+
+
+
+
+
+
+
+TAILWIND CONFIG CUSTOMIZE
+
+here we want to create our own color, font etc that is not available on default tailwind
+
+run 
+npx tailwindcss init --full
+it creates a new file called  tailwind.config.js
+then rename it to maybe tailwinddefault.config.js 
+then create a new config ie npx tailwindcss init
+
+add what you want in extends. Ie theme: {
+    extend: {
+      colors: {
+        primary: "#FF6363",
+        secondary: {
+          100: "#E2E2D5",
+          200: '#888883',
+        }
+      }
+    },
+  },
+  plugins: [],
+
+  remeber to add './public/**/*.{html,js}', in between content  //on tailwind.config.js, not the 
+  other one we renamed
+
+  to use it in index => class="text-primary" bg-secondary-100      .....etc bg is background
+
+
+
+
+
+
+
+
+  CUSTOM FONTS 
+
+  go to custom fonts website eg https://fonts.google.com/specimen/Nunito, select what you want 
+  in this case our font is nunito 
+  copy ALL inside style ie. @import url('http........
+  paste it on src=> styles file, at the top
+
+  extend it like how we did previously above i.e 
+    fontFamily: {
+        body: ['Nunito']   //that body 'name' is also custom we can call it whatever we want and 'Nunito' has to be named that way
+      }
+
+to use it on index.html, class = 'font-body'
+
+USING FLEX BOX
+
+We use justify eg, class = 'justify-center, flex justify-end to position an item
+add margin between them => ml-2
+
+CARDS
+ Here the cards are image, 5 bean stew, recipe by Mario
+
+<div class="bg-white rounded-md overflow-hidden">
+/* overflow-hidden to hide anything that goes over the boundaries of the card, eg image might not get rounded
+at some corners because it goes beyond the card */
+
+//to push"recipe by mario" down, use class="block"
+//add margin m-4 to separate the 2 sentences, but should be inside the words div to prevent image also affected
+
+//to make image size similar to card size, class="w-full h-32 sm:-48"
+//h-32 means default height of 32
+//sm means smaller screens
+//but now we have distorted the image, we can correct that by object-cover, the image will onlyshow inside the card
+
+BADGES
+//Add a 25 mins badge
+
+<div class="bg-secondary-100  text-secondary-200 text-xs uppercase font-bold rounded-full p-2 absolute top-0 ml-2 mt-2">
+ <span>25 mins</span>
+
+
+/*to position it from card, make card class relative, then mane badge div class absolute and add top-0 ml-2 mt-2 
+ to make it move to the top left ml means margin left*/
+// you have to add absolute for top-0 ml-2 mt-2 to work
+
+
+
+@apply Directive
+
+//if we want to re-use css code like in card, we use @apply
+// go to src styles and save the css there Instead//give a class to the card div and delete the css code
+//then on styles.css paste the css code there i.e 
+.card{
+    @apply bg-white rounded-md overflow-hidden drop-shadow-md relative
+}
+
+
+GRID 
+
+give the cards container a class of grid then add the number of columns grid-cols-3
+// add the grid gap, to have gaps btn thee grids gap-10
+//to make it only apply to large screen add lg before, i.e lg:grid-cols-3 gap-10
+
+
+//add a grid to the whole page i.e have navbar on left and content on right, but navbar is small 
+so we'll have three grids and let it occupy one.
+
+<div class="grid md:grid-cols-3"> <!-- content wrapper -->
+        <div class="md:col-span-1"> // make nav occupy only one grid
+
+
+ <main class="px-16 py-6 bg-gray-100 md:col-span-2"> // make the contents occupy the other 2
+
+
+ BUTTONS
+
+ give btn class to re-use it 
+ .btn{
+    @apply rounded-full py-2 px-3 uppercase text-xs font-bold cursor-pointer tracking-wider;
+}
+
+then style ONLY the ones on the top, in this case we will style it in the html
+<a href="#" class=" btn text-primary border-primary md:border-2">Log in</a>
+<a href="#" class="btn text-primary ml-2 border-primary md:border-2">Sign up</a>
+//md for medium sized screen buttons border will only apply to mediumabd above screens
+
+
+ICONS
+we use third party to get the icons like  https://heroicons.com/, https://heroicons.dev/
+click on an icon to copy code, 
+paste it where you want it to be placed,
+
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+
+ give it a class to resize and position it
+   <svg class="w-4 h-4 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+ </svg>
+ //inline block to make it sit in like with the words
+
+
+
+
+ HOVER EFFECTS
+ use hover:   then the effect you want
+ hover:bg-red hover:text-white, this turns text intomwhite and button into red
+ eg <a href="#" class=" btn text-red border-primary md:border-2 hover:bg-primary hover:text-white">Log in</a>
